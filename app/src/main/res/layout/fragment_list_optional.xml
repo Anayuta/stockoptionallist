@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <FrameLayout
+            android:id="@+id/fl_edit_cacelsort"
+            android:layout_width="95dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_cacel_sort"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#00ff30"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="取消排序"
+                android:textColor="#fff"
+                android:textSize="16sp"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.example.administrator.stockoptionallist.locktable.CHScrollView
+                android:id="@+id/sort_scroll_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never">
+
+                <LinearLayout
+                    android:layout_width="140dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|right">
+
+                    <TextView
+                        android:id="@+id/rtv_list_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="4dp"
+                        android:text="现价"
+                        android:textColor="#888"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="140dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|right">
+
+                    <TextView
+                        android:id="@+id/rtv_list_chg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginRight="10dp"
+                        android:drawablePadding="4dp"
+                        android:text="涨跌幅"
+                        android:textColor="#888"
+                        android:textSize="16sp" />
+
+                    <!--                 <ImageView
+                                         android:id="@+id/iv_scroll_tips"
+                                         android:layout_width="4dp"
+                                         android:layout_height="7dp"
+                                         android:layout_gravity="right|center_vertical"
+                                         android:layout_marginEnd="4dp"
+                                         android:src="@mipmap/quotation_sort_tran"
+                                         tools:ignore="RtlHardcoded" />-->
+                </FrameLayout>
+
+                <LinearLayout
+                    tools:ignore="RtlHardcoded"
+                    android:layout_width="140dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|right">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="6dp"
+                        android:drawablePadding="4dp"
+                        android:text="开盘"
+                        android:textColor="#888"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    tools:ignore="RtlHardcoded"
+                    android:layout_width="140dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|right">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="6dp"
+                        android:drawablePadding="4dp"
+                        android:text="最高"
+                        android:textColor="#888"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    tools:ignore="RtlHardcoded"
+                    android:layout_width="140dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|right">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="6dp"
+                        android:drawablePadding="4dp"
+                        android:text="最低"
+                        android:textColor="#888"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    tools:ignore="RtlHardcoded"
+                    android:layout_width="140dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|right">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="6dp"
+                        android:drawablePadding="4dp"
+                        android:text="振幅"
+                        android:textColor="#888"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    tools:ignore="RtlHardcoded"
+                    android:layout_width="140dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|right">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="6dp"
+                        android:drawablePadding="4dp"
+                        android:text="昨收"
+                        android:textColor="#888"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </com.example.administrator.stockoptionallist.locktable.CHScrollView>
+
+        </FrameLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#eee" />
+
+
+    <com.example.administrator.stockoptionallist.locktable.OptionalStockListView
+        android:id="@+id/rlv_optional_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>
+
