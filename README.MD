@@ -1,0 +1,1 @@
+##目前存在问题，item点击事件给横向事件处理了，虽然HorizontalScrollViewEx 拦截的时候down返回了false，但依然recyleview的item点击不响应
