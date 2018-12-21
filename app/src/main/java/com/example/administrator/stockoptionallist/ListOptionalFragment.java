@@ -1,7 +1,12 @@
 package com.example.administrator.stockoptionallist;
 
+import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +19,9 @@ import com.chad.library.adapter.base_v2_0.BaseViewHolder;
 import com.example.administrator.stockoptionallist.locktable.CHScrollView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import me.jessyan.autosize.utils.LogUtils;
 
@@ -29,10 +36,20 @@ public class ListOptionalFragment extends Fragment implements BaseQuickAdapter.O
     private StockOptionalAdapter mStockOptionalAdapter;
 
     //装入所有的HScrollView
-    protected List<CHScrollView> mHScrollViews = new ArrayList<>();
+    protected Map<Integer, CHScrollView> mHScrollViews = new HashMap<>();
 
     private View rootView;
     private RecyclerView recyclerView;
+
+
+    @SuppressLint("HandlerLeak")
+    private Handler mh = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            mStockOptionalAdapter.setNewData(getList());
+            mh.sendEmptyMessageDelayed(0, 1000);
+        }
+    };
 
     @Nullable
     @Override
@@ -52,13 +69,16 @@ public class ListOptionalFragment extends Fragment implements BaseQuickAdapter.O
         //添加头滑动事件
         CHScrollView sortScrollTitle = (CHScrollView) rootView.findViewById(R.id.sort_scroll_title);
         sortScrollTitle.setListOptionalFragment(this);
-        mHScrollViews.add(sortScrollTitle);
+        mHScrollViews.put(-1, sortScrollTitle);
+        mh.sendEmptyMessageDelayed(0, 1000);
     }
 
 
     public void onScrollChanged(int l, int t, int oldl, int oldt) {
-        for (CHScrollView scrollView : mHScrollViews) {
-            int scrollX = scrollView.getScrollX();
+
+        for (Integer position : mHScrollViews.keySet()) {
+            CHScrollView scrollView = mHScrollViews.get(position);
+//            int scrollX = scrollView.getScrollX();
             scrollView.scrollTo(l, t);
         }
     }
@@ -82,19 +102,21 @@ public class ListOptionalFragment extends Fragment implements BaseQuickAdapter.O
             this.listOptionalFragment = listOptionalFragment;
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         protected void convert(BaseViewHolder baseViewHolder, StockModel stockModel) {
             baseViewHolder.itemView.setBackgroundResource(R.drawable.recycler_bg);
-            baseViewHolder.setText(R.id.tv_stock_name,stockModel.getName())
-                    .setText(R.id.tv_stock_code,stockModel.getCode());
-            addHViews((CHScrollView) baseViewHolder.getView(R.id.item_scroll_view));
+            baseViewHolder.setText(R.id.tv_stock_name, stockModel.getName())
+                    .setText(R.id.tv_stock_code, stockModel.getCode());
+            addHViews(baseViewHolder.getAdapterPosition(), (CHScrollView) baseViewHolder.getView(R.id.item_scroll_view));
         }
 
-        void addHViews(final CHScrollView hScrollView) {
+        @RequiresApi(api = Build.VERSION_CODES.N)
+        void addHViews(int position, final CHScrollView hScrollView) {
             hScrollView.setListOptionalFragment(listOptionalFragment);
             if (!mHScrollViews.isEmpty()) {
                 int size = mHScrollViews.size();
-                CHScrollView scrollView = mHScrollViews.get(size - 1);
+                CHScrollView scrollView = mHScrollViews.get(- 1);
                 final int scrollX = scrollView.getScrollX();
                 //第一次满屏后，向下滑动，有一条数据在开始时未加入
                 if (scrollX != 0) {
@@ -107,17 +129,18 @@ public class ListOptionalFragment extends Fragment implements BaseQuickAdapter.O
                     });
                 }
             }
-            mHScrollViews.add(hScrollView);
+            mHScrollViews.putIfAbsent(position, hScrollView);
         }
 
         void setDatas(List<StockModel> stockModels) {
             this.mData = stockModels;
+            notifyDataSetChanged();
         }
     }
 
     private List<StockModel> getList() {
         List<StockModel> list = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 3000; i++) {
             list.add(new StockModel(String.valueOf(600546 + i), "股票key" + i));
         }
         return list;
